@@ -1,36 +1,43 @@
-import mongoose from "mongoose";
-import { isName,isEmail,isStrongPassword } from "../utils/validate";
-import userRoles from "../utils/userRoles";
+const mongoose = require("mongoose");
+const { isName, isEmail, isStrongPassword } = require("../utils/validate");
+const userRoles = require("../utils/userRoles");
 
-const userSchema = mongoose.Schema({
-    name:{
-        Type:String,
-        required:[true, "Name is required"],
-        validate:[isName,"Invalid Name"],
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      validate: [isName, "Invalid Name"],
     },
-    email:{
-        Type:String,
-        required:[true,"Email is required"],
-        validate:[isEmail,"Invalid Email"]
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      validate: [isEmail, "Invalid Email"],
     },
-    password:{
-        Type:String,
-        required:[true, "Password is required"],
-        validate:[isStrongPassword,"Set strong password"]
+    password: {
+      type: String,
+      required: [true, "Password is required"],
     },
-    verificationCode:{
-        tyoe:String
+    currency: {
+      type: String,
+      default: "EGP",
     },
-    role:{
-        type:String,
-        enum:[userRoles.ADMIN,userRoles.USER],
-        default:userRoles.USER,
+    role: {
+      type: String,
+      enum: [userRoles.ADMIN, userRoles.USER],
+      default: userRoles.USER,
     },
-    token:{
-        type:String,
-    }
-});
+    resetCode: {
+      type: String,
+    },
+    resetCodeExpires: {
+      type: Date,
+    },
+  },
+  { timestamps: true }
+);
 
-let userModel =mongoose.model("User",userSchema);
+const userModel = mongoose.model("User", userSchema);
 
-export default userModel;
+module.exports = userModel;
