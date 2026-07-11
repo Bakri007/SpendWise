@@ -199,4 +199,30 @@ const deleteUser = catchError(async (req, res, next) => {
 });
 
 
-module.exports = { register, login, forgotPassword, verifyResetCode, resetPassword, getAllUsers, deleteUser };
+
+const updateCurrency = catchError(async (req, res, next) => {
+  const { currency } = req.body;
+  await userModel.findByIdAndUpdate(req.user.id, { currency });
+  res.status(200).json({
+    status: statusText.SUCCESS,
+    message: 'Currency updated successfully',
+    data: null
+  });
+});
+
+const changePassword = catchError(async (req, res, next) => {
+  const { newPassword } = req.body;
+  
+  const hashPassword = await bcrypt.hash(newPassword, 10);
+  
+  await userModel.findByIdAndUpdate(req.user.id, { password: hashPassword });
+  
+  res.status(200).json({
+    status: statusText.SUCCESS,
+    message: 'Password changed successfully',
+    data: null
+  });
+});
+
+
+module.exports = { register, login, forgotPassword, verifyResetCode, resetPassword, getAllUsers, deleteUser, updateCurrency, changePassword };

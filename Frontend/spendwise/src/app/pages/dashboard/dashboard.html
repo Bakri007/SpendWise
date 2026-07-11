@@ -1,1 +1,62 @@
-<p>dashboard works!</p>
+<div class="layout">
+  <app-sidebar #sidebarRef></app-sidebar>
+<div class="main">
+  <app-navbar [title]="'Dashboard'" [sidebarRef]="sidebarRef"></app-navbar>
+    <div class="content">
+      <div class="cards">
+        <div class="card">
+          <div class="card-label">Total Income</div>
+          <div class="card-value green">{{ currency }} {{ totalIncome | number:'1.0-0' }}</div>
+          <div class="card-sub">This month</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Total Expenses</div>
+          <div class="card-value red">{{ currency }} {{ totalExpenses | number:'1.0-0' }}</div>
+          <div class="card-sub">This month</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Balance</div>
+          <div class="card-value">{{ currency }} {{ balance | number:'1.0-0' }}</div>
+          <div class="card-sub">Available</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Budget Status</div>
+          <div class="card-value" [class.warning]="budgetPercent > 80">{{ budgetPercent }}%</div>
+          <div class="card-sub">of {{ currency }} {{ totalBudget | number:'1.0-0' }}</div>
+        </div>
+      </div>
+
+      <div class="charts">
+        <div class="chart-box">
+          <div class="chart-title">Income vs Expenses</div>
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <div class="chart-title">Expenses by Category</div>
+          <canvas id="donutChart"></canvas>
+        </div>
+      </div>
+
+      <div class="transactions">
+        <div class="trans-header">
+          <div class="trans-title">Recent Transactions</div>
+        </div>
+        <div class="trans-row" *ngFor="let t of recentTransactions">
+          <div class="trans-icon" [style.color]="t.color">
+            <i [class]="'ti ti-' + t.icon"></i>
+          </div>
+          <div class="trans-info">
+            <div class="trans-name">{{ t.description }}</div>
+            <div class="trans-date">{{ t.date | date:'MMM d, y' }}</div>
+          </div>
+          <div class="trans-amount" [class.green]="t.type === 'income'" [class.red]="t.type === 'expense'">
+            {{ t.type === 'income' ? '+' : '-' }} {{ currency }} {{ t.amount | number:'1.0-0' }}
+          </div>
+        </div>
+        <div class="empty" *ngIf="recentTransactions.length === 0">
+          No transactions yet
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

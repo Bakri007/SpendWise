@@ -1,0 +1,136 @@
+.layout {
+  display: flex;
+  background: #0F0F1A;
+  min-height: 100vh;
+}
+
+.main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  min-width: 0;
+  padding-top: 60px;
+  transition: margin-left 0.3s ease;
+
+  @media (max-width: 768px) {
+    margin-left: 0 !important;
+  }
+}
+
+.content { padding: 24px; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: #13132a;
+  border-radius: 12px;
+  padding: 20px;
+  border: 0.5px solid #2a2a3a;
+}
+
+.card-label { font-size: 12px; color: #888; margin-bottom: 8px; }
+
+.card-value {
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 4px;
+  &.green { color: #2ECC71; }
+  &.red { color: #EE3E55; }
+  &.warning { color: #EF9F27; }
+}
+
+.card-sub { font-size: 11px; color: #888; }
+
+.charts {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-box {
+  background: #13132a;
+  border-radius: 12px;
+  padding: 20px;
+  border: 0.5px solid #2a2a3a;
+  min-width: 0;
+}
+
+.chart-title {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.transactions {
+  background: #13132a;
+  border-radius: 12px;
+  padding: 20px;
+  border: 0.5px solid #2a2a3a;
+}
+
+.trans-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.trans-title { font-size: 13px; color: #fff; font-weight: 500; }
+
+.trans-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid #2a2a3a;
+  &:last-child { border-bottom: none; }
+}
+
+.trans-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #1a1a2e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.trans-info { flex: 1; min-width: 0; }
+.trans-name { font-size: 13px; color: #fff; }
+.trans-date { font-size: 11px; color: #888; }
+
+.trans-amount {
+  font-size: 13px;
+  font-weight: 500;
+  &.green { color: #2ECC71; }
+  &.red { color: #EE3E55; }
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+  font-size: 13px;
+  padding: 20px 0;
+}

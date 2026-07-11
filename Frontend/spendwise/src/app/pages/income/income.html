@@ -1,1 +1,88 @@
-<p>income works!</p>
+<div class="layout">
+  <app-sidebar #sidebarRef></app-sidebar>
+  <div class="main">
+    <app-navbar [title]="'Income'" [sidebarRef]="sidebarRef"></app-navbar>
+    <div class="content">
+
+      <div class="page-header">
+        <h2 class="page-title">Income</h2>
+        <button class="add-btn" (click)="openModal()">
+          <i class="ti ti-plus" aria-hidden="true"></i> Add Income
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Source</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let income of incomes">
+              <td>{{ income.description }}</td>
+              <td>{{ income.category_id?.name || '—' }}</td>
+              <td>{{ income.date | date:'MMM d, y' }}</td>
+              <td><span class="badge">{{ income.source }}</span></td>
+              <td class="amount green">+ {{ currency }} {{ income.amount | number:'1.0-0' }}</td>
+              <td>
+                <button class="icon-btn" (click)="editIncome(income)">
+                  <i class="ti ti-edit" aria-hidden="true"></i>
+                </button>
+                <button class="icon-btn danger" (click)="deleteIncome(income._id)">
+                  <i class="ti ti-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="incomes.length === 0">
+              <td colspan="6" class="empty">No income yet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+        <div class="modal" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>{{ editMode ? 'Edit Income' : 'Add Income' }}</h3>
+            <button class="close-btn" (click)="closeModal()">
+              <i class="ti ti-x" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="field">
+            <label class="label">Description</label>
+            <input class="input" type="text" [(ngModel)]="form.description" placeholder="e.g. Monthly salary" />
+          </div>
+          <div class="field">
+            <label class="label">Amount</label>
+            <input class="input" type="number" [(ngModel)]="form.amount" placeholder="0" />
+          </div>
+          <div class="field">
+            <label class="label">Date</label>
+            <input class="input" type="date" [(ngModel)]="form.date" />
+          </div>
+          <div class="field">
+            <label class="label">Source</label>
+            <select class="input" [(ngModel)]="form.source">
+              <option value="salary">Salary</option>
+              <option value="freelance">Freelance</option>
+              <option value="investment">Investment</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+
+          <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+          <button class="btn" (click)="onSubmit()">{{ editMode ? 'Save Changes' : 'Add Income' }}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

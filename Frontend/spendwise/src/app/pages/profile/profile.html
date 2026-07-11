@@ -1,1 +1,33 @@
-<p>profile works!</p>
+<div class="layout">
+  <app-sidebar #sidebarRef></app-sidebar>
+  <div class="main">
+    <app-navbar [title]="'Profile'" [sidebarRef]="sidebarRef"></app-navbar>
+    <div class="content">
+
+      <div class="profile-card">
+        <div class="avatar">{{ userInitial }}</div>
+        <div class="user-info">
+          <div class="user-name">{{ userName }}</div>
+          <div class="user-email">{{ userEmail }}</div>
+          <div class="user-role">{{ userRole }}</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title">Change Password</h3>
+        <div class="field">
+          <label class="label">New Password</label>
+          <input class="input" type="password" [(ngModel)]="newPassword" placeholder="••••••••" />
+        </div>
+        <div class="field">
+          <label class="label">Confirm Password</label>
+          <input class="input" type="password" [(ngModel)]="confirmPassword" placeholder="••••••••" />
+        </div>
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+        <button class="btn" (click)="changePassword()">Update Password</button>
+      </div>
+
+    </div>
+  </div>
+</div>

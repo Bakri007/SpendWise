@@ -1,1 +1,74 @@
-<p>categories works!</p>
+<div class="layout">
+  <app-sidebar #sidebarRef></app-sidebar>
+  <div class="main">
+    <app-navbar [title]="'Categories'" [sidebarRef]="sidebarRef"></app-navbar>
+    <div class="content">
+
+      <div class="page-header">
+        <h2 class="page-title">Categories</h2>
+        <button class="add-btn" (click)="openModal()">
+          <i class="ti ti-plus" aria-hidden="true"></i> Add Category
+        </button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab" [class.active]="activeTab === 'expense'" (click)="setTab('expense')">Expenses</button>
+        <button class="tab" [class.active]="activeTab === 'income'" (click)="setTab('income')">Income</button>
+      </div>
+      
+      <div class="categories-grid">
+        <div class="category-card" *ngFor="let cat of filteredCategories">
+          <div class="cat-icon" [style.color]="cat.color">{{ cat.icon }}</div>
+          <div class="cat-name">{{ cat.name }}</div>
+          <div class="cat-type" [class.income]="cat.type === 'income'">{{ cat.type }}</div>
+          <div class="cat-actions">
+            <button class="icon-btn" (click)="editCategory(cat)">
+              <i class="ti ti-edit" aria-hidden="true"></i>
+            </button>
+            <button class="icon-btn danger" (click)="deleteCategory(cat._id)">
+              <i class="ti ti-trash" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="empty-grid" *ngIf="filteredCategories.length === 0">
+          No categories yet
+        </div>
+      </div>
+
+      <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+        <div class="modal" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>{{ editMode ? 'Edit Category' : 'Add Category' }}</h3>
+            <button class="close-btn" (click)="closeModal()">
+              <i class="ti ti-x" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="field">
+            <label class="label">Name</label>
+            <input class="input" type="text" [(ngModel)]="form.name" placeholder="e.g. Food" />
+          </div>
+          <div class="field">
+            <label class="label">Icon (emoji)</label>
+            <input class="input" type="text" [(ngModel)]="form.icon" placeholder="e.g. 🍕" />
+          </div>
+          <div class="field">
+            <label class="label">Color</label>
+            <input class="input" type="color" [(ngModel)]="form.color" />
+          </div>
+          <div class="field">
+            <label class="label">Type</label>
+            <select class="input" [(ngModel)]="form.type">
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+
+          <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+          <button class="btn" (click)="onSubmit()">{{ editMode ? 'Save Changes' : 'Add Category' }}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

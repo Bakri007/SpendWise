@@ -1,4 +1,4 @@
-const {login, register, resetPassword, forgotPassword, verifyResetCode, getAllUsers, deleteUser}=require("../controllers/auth")
+const {login, register, resetPassword, forgotPassword, verifyResetCode, getAllUsers, deleteUser, updateCurrency, changePassword} = require("../controllers/auth")
 const router = require("express").Router();
 const validate = require("../middlewares/validate");
 const { registerSchema, loginSchema, forgotPasswordSchema, verifyResetCodeSchema, resetPasswordSchema } = require("./auth.validation");
@@ -11,6 +11,6 @@ router.post("/verify-reset-code", verifyResetCodeSchema, validate,verifyResetCod
 router.post("/reset-password", resetPasswordSchema, validate,resetPassword);
 router.get("/users", verifyToken, allowedTo("admin"), getAllUsers);
 router.delete("/users/:id", verifyToken, allowedTo("admin"), deleteUser);
-
-
+router.patch('/currency', verifyToken, updateCurrency);
+router.patch('/change-password', verifyToken, changePassword);
 module.exports = router;

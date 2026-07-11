@@ -1,1 +1,70 @@
-<p>budget works!</p>
+<div class="layout">
+  <app-sidebar #sidebarRef></app-sidebar>
+  <div class="main">
+    <app-navbar [title]="'Budget'" [sidebarRef]="sidebarRef"></app-navbar>
+    <div class="content">
+
+      <div class="page-header">
+        <h2 class="page-title">Budget — {{ currentMonth }}</h2>
+        <button class="add-btn" (click)="openModal()" *ngIf="!budget">
+          <i class="ti ti-plus" aria-hidden="true"></i> Set Budget
+        </button>
+        <button class="add-btn" (click)="openModal()" *ngIf="budget">
+          <i class="ti ti-edit" aria-hidden="true"></i> Edit Budget
+        </button>
+      </div>
+
+      <div class="budget-card" *ngIf="budget">
+        <div class="budget-header">
+          <div>
+            <div class="budget-label">Total Budget</div>
+            <div class="budget-value">{{ currency }} {{ budget.total_limit | number:'1.0-0' }}</div>
+          </div>
+          <div class="budget-spent">
+            <div class="budget-label">Spent</div>
+            <div class="budget-value red">{{ currency }} {{ totalSpent | number:'1.0-0' }}</div>
+          </div>
+          <div>
+            <div class="budget-label">Remaining</div>
+            <div class="budget-value green">{{ currency }} {{ budget.total_limit - totalSpent | number:'1.0-0' }}</div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width]="spentPercent + '%'"
+                 [class.warning]="spentPercent > 80"
+                 [class.danger]="spentPercent > 100"></div>
+          </div>
+          <div class="progress-label">{{ spentPercent }}% used</div>
+        </div>
+      </div>
+
+      <div class="empty-budget" *ngIf="!budget">
+        <i class="ti ti-wallet" aria-hidden="true"></i>
+        <p>No budget set for this month</p>
+        <button class="add-btn" (click)="openModal()">Set Budget</button>
+      </div>
+
+      <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+        <div class="modal" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>{{ budget ? 'Edit Budget' : 'Set Budget' }}</h3>
+            <button class="close-btn" (click)="closeModal()">
+              <i class="ti ti-x" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="field">
+            <label class="label">Total Monthly Limit</label>
+            <input class="input" type="number" [(ngModel)]="form.total_limit" placeholder="e.g. 5000" />
+          </div>
+
+          <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+          <button class="btn" (click)="onSubmit()">{{ budget ? 'Save Changes' : 'Set Budget' }}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,1 +1,44 @@
-<p>sidebar works!</p>
+<div class="overlay" [class.visible]="isOpen" (click)="closeSidebar()"></div>
+
+<div class="sidebar" [class.collapsed]="isCollapsed" [class.open]="isOpen">
+  <div class="sidebar-top">
+    <div class="logo" *ngIf="!isCollapsed">Spend<span>Wise</span></div>
+    <button class="toggle-btn" (click)="toggle()" aria-label="Toggle sidebar">
+      <i class="ti ti-layout-sidebar" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <nav class="nav">
+    <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
+      <span *ngIf="!isCollapsed">Dashboard</span>
+    </a>
+    <a class="nav-item" routerLink="/expenses" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="ti ti-arrow-down-circle" aria-hidden="true"></i>
+      <span *ngIf="!isCollapsed">Expenses</span>
+    </a>
+    <a class="nav-item" routerLink="/income" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="ti ti-arrow-up-circle" aria-hidden="true"></i>
+      <span *ngIf="!isCollapsed">Income</span>
+    </a>
+    <a class="nav-item" routerLink="/budget" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="ti ti-wallet" aria-hidden="true"></i>
+      <span *ngIf="!isCollapsed">Budget</span>
+    </a>
+    <a class="nav-item" routerLink="/categories" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="ti ti-category" aria-hidden="true"></i>
+      <span *ngIf="!isCollapsed">Categories</span>
+    </a>
+    <a class="nav-item" routerLink="/profile" routerLinkActive="active" (click)="closeSidebar()">
+      <i class="ti ti-user" aria-hidden="true"></i>
+      <span *ngIf="!isCollapsed">Profile</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <button class="logout-btn" (click)="logout()">
+      <i class="ti ti-logout" aria-hidden="true"></i>
+      <span *ngIf="!isCollapsed">Logout</span>
+    </button>
+  </div>
+</div>

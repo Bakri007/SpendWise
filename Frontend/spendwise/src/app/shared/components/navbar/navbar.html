@@ -1,1 +1,22 @@
-<p>navbar works!</p>
+<div class="navbar">
+  <div class="navbar-left"><button class="menu-btn" (click)="openSidebar()" aria-label="Open menu">
+    <i class="ti ti-menu-2" aria-hidden="true"></i>
+  </button>
+    <div class="page-title">{{ title }}</div>
+  </div>
+  <div class="navbar-right">
+    <div class="currency-wrap">
+      <button class="currency-badge" (click)="toggleCurrencyMenu()">
+        {{ currency }} <i class="ti ti-chevron-down" aria-hidden="true"></i>
+      </button>
+      <div class="currency-menu" *ngIf="showCurrencyMenu">
+        <div class="currency-option" *ngFor="let c of currencies"
+             (click)="changeCurrency(c)"
+             [class.selected]="c === currency">
+          {{ c }}
+        </div>
+      </div>
+    </div>
+    <i class="ti ti-bell" aria-hidden="true"></i>
+  </div>
+</div>

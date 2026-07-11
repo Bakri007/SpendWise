@@ -1,5 +1,5 @@
-const express = require("express");
 const dotenv = require("dotenv");
+const express = require("express");
 const connectDB = require("./config/db");
 const handelError = require("./middlewares/handelError");
 const authRoutes = require("./routes/auth");
@@ -7,12 +7,18 @@ const categoryRoutes = require("./routes/category");
 const expenseRoutes = require("./routes/expense");
 const incomeRoutes = require("./routes/income");
 const budgetRoutes = require("./routes/budget")
+const cors = require("cors");
+
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
 
+
+app.use(cors({
+  origin: "http://localhost:4200"
+}));
 
 connectDB();
 

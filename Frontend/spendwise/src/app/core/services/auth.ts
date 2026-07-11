@@ -33,4 +33,21 @@ logout(){
 isLoggedIn(): boolean {
   return !!localStorage.getItem('token');
   }
+
+  forgotPassword(email: string) {
+  return this.http.post(`${this.apiUrl}/forgot-password`, { email });
 }
+
+verifyResetCode(email: string, resetCode: string) {
+  return this.http.post(`${this.apiUrl}/verify-reset-code`, { email, resetCode });
+}
+
+resetPassword(email: string, resetCode: string, newPassword: string) {
+  return this.http.post(`${this.apiUrl}/reset-password`, { email, resetCode, newPassword });
+}
+changePassword(email: string, newPassword: string) {
+  return this.http.patch(`${this.apiUrl}/change-password`, { email, newPassword });
+}
+}
+
+

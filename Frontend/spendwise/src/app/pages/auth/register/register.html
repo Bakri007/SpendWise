@@ -1,1 +1,68 @@
-<p>register works!</p>
+<div class="register-wrap">
+  <div class="dots-bg" id="dotsBg"></div>
+
+  <div class="register-stage">
+    <img class="mascot" src="assets/images/mascot.png" alt="SpendWise mascot" />
+
+    <div class="register-card">
+      <div class="logo">Spend<span>Wise</span></div>
+      <p class="subtitle">Create your account</p>
+
+      <div class="field">
+        <label class="label">Name</label>
+        <input class="input" type="text" [(ngModel)]="name"
+               placeholder="Your name"
+               autocomplete="off"
+               (blur)="validateName()" />
+        <p class="field-error" *ngIf="nameError">{{ nameError }}</p>
+      </div>
+
+      <div class="field">
+        <label class="label">Email</label>
+        <input class="input" type="email" [(ngModel)]="email"
+               placeholder="you@example.com"
+               autocomplete="off"
+               (blur)="validateEmail()" />
+        <p class="field-error" *ngIf="emailError">{{ emailError }}</p>
+      </div>
+
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="password-wrap">
+          <input class="input" [type]="showPassword ? 'text' : 'password'"
+                 [(ngModel)]="password"
+                 placeholder="••••••••"
+                 autocomplete="new-password"
+                 (blur)="validatePassword()" />
+          <span class="eye" (click)="togglePassword()">
+            <i [class]="showPassword ? 'ti ti-eye-off' : 'ti ti-eye'"></i>
+          </span>
+        </div>
+        <p class="field-error" *ngIf="passwordError">{{ passwordError }}</p>
+      </div>
+
+      <div class="field">
+        <label class="label">Currency</label>
+        <select class="input" [(ngModel)]="currency">
+          <option value="EGP">EGP — Egyptian Pound</option>
+          <option value="USD">USD — US Dollar</option>
+          <option value="EUR">EUR — Euro</option>
+          <option value="GBP">GBP — British Pound</option>
+          <option value="SAR">SAR — Saudi Riyal</option>
+        </select>
+      </div>
+
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button class="btn" (click)="onSubmit()">Sign up</button>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-text">or</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <p class="switch">Already have an account? <span (click)="goToLogin()">Log in</span></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+
+  @media (max-width: 768px) {
+    &.visible { display: block; }
+  }
+}
+
+.sidebar {
+  width: 220px;
+  background: #13132a;
+  border-right: 0.5px solid #2a2a3a;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  transition: width 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+
+  &.collapsed {
+    width: 60px;
+  }
+
+  @media (max-width: 768px) {
+    width: 220px !important;
+    transform: translateX(-100%);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.sidebar-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 12px;
+  border-bottom: 0.5px solid #2a2a3a;
+  margin-bottom: 16px;
+  min-height: 57px;
+  gap: 8px;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  flex: 1;
+  span { color: #A5B4FC; }
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  &:hover { color: #fff; }
+}
+
+.nav { flex: 1; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: #888;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  i { font-size: 18px; flex-shrink: 0; }
+
+  &:hover { color: #fff; background: #1a1a2e; }
+
+  &.active {
+    color: #A5B4FC;
+    background: #1a1a2e;
+    border-right: 2px solid #6366F1;
+  }
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 16px 12px;
+  border-top: 0.5px solid #2a2a3a;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 4px;
+  white-space: nowrap;
+
+  i { font-size: 18px; flex-shrink: 0; }
+  &:hover { color: #EE3E55; }
+}

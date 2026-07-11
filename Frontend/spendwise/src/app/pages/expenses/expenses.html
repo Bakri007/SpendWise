@@ -1,1 +1,108 @@
-<p>expenses works!</p>
+<div class="layout">
+  <app-sidebar #sidebarRef></app-sidebar>
+  <div class="main">
+    <app-navbar [title]="'Expenses'" [sidebarRef]="sidebarRef"></app-navbar>
+    <div class="content">
+
+      <div class="page-header">
+        <h2 class="page-title">Expenses</h2>
+        <button class="add-btn" (click)="openModal()">
+          <i class="ti ti-plus" aria-hidden="true"></i> Add Expense
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters">
+        <select class="filter-select" [(ngModel)]="filterPayment" (change)="applyFilter()">
+          <option value="">All Payment Methods</option>
+          <option value="cash">Cash</option>
+          <option value="visa">Visa</option>
+          <option value="bank_transfer">Bank Transfer</option>
+        </select>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Payment</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let expense of expenses">
+              <td>{{ expense.description }}</td>
+              <td>{{ expense.category_id?.name || '—' }}</td>
+              <td>{{ expense.date | date:'MMM d, y' }}</td>
+              <td><span class="badge">{{ expense.payment_method }}</span></td>
+              <td class="amount red">- {{ currency }} {{ expense.amount | number:'1.0-0' }}</td>
+              <td>
+                <button class="icon-btn" (click)="editExpense(expense)">
+                  <i class="ti ti-edit" aria-hidden="true"></i>
+                </button>
+                <button class="icon-btn danger" (click)="deleteExpense(expense._id)">
+                  <i class="ti ti-trash" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="expenses.length === 0">
+              <td colspan="6" class="empty">No expenses yet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+        <div class="modal" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>{{ editMode ? 'Edit Expense' : 'Add Expense' }}</h3>
+            <button class="close-btn" (click)="closeModal()">
+              <i class="ti ti-x" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="field">
+            <label class="label">Description</label>
+            <input class="input" type="text" [(ngModel)]="form.description" placeholder="e.g. Lunch" />
+          </div>
+          <div class="field">
+            <label class="label">Amount</label>
+            <input class="input" type="number" [(ngModel)]="form.amount" placeholder="0" />
+          </div>
+          <div class="field">
+            <label class="label">Date</label>
+            <input class="input" type="date" [(ngModel)]="form.date" />
+          </div>
+          <div class="field">
+            <label class="label">Payment Method</label>
+            <select class="input" [(ngModel)]="form.payment_method">
+              <option value="cash">Cash</option>
+              <option value="visa">Visa</option>
+              <option value="bank_transfer">Bank Transfer</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="label">Category</label>
+            <select class="input" [(ngModel)]="form.category_id">
+              <option value="">Select Category</option>
+              <option *ngFor="let cat of categories" [value]="cat._id">{{ cat.name }}</option>
+            </select>
+          </div>
+
+          <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+          <button class="btn" (click)="onSubmit()">
+            {{ editMode ? 'Save Changes' : 'Add Expense' }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

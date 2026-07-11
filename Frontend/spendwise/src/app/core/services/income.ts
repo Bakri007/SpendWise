@@ -14,7 +14,7 @@ export class Income {
     return this.http.get(this.apiUrl)
   }
 
-  createIncome(amount:number, description:string, date:Date, source:string, category_id:string){
+  createIncome(amount:number, description:string, date:Date, source:string, category_id:null){
     return this.http.post(this.apiUrl,{
       amount,
       description,
@@ -26,7 +26,7 @@ export class Income {
   }
 
 
-  updateIncome(id:string,amount:number, description:string, date:Date, source:string, category_id:string){
+  updateIncome(id:string,amount:number, description:string, date:Date, source:string, category_id:null){
     return this.http.put(`${this.apiUrl}/${id}`,{
       amount,
       description,
