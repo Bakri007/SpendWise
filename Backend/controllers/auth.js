@@ -212,11 +212,13 @@ const updateCurrency = catchError(async (req, res, next) => {
 
 const changePassword = catchError(async (req, res, next) => {
   const { newPassword } = req.body;
-  
+
   const hashPassword = await bcrypt.hash(newPassword, 10);
-  
-  await userModel.findByIdAndUpdate(req.user.id, { password: hashPassword });
-  
+
+  await userModel.findByIdAndUpdate(req.user.id, { 
+    password: hashPassword 
+  });
+
   res.status(200).json({
     status: statusText.SUCCESS,
     message: 'Password changed successfully',

@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Auth } from '../../../core/services/auth';
@@ -21,11 +21,16 @@ export class ForgotPassword implements AfterViewInit {
   newPasswordError: string = '';
   confirmPasswordError: string = '';
   showPassword: boolean = false;
+  isSending: boolean = false;
+  canResend: boolean = true;
+  timeLeft: number = 300; 
+  timerInterval: any;
 
   constructor(
     private authService: Auth,
     private router: Router,
-    private el: ElementRef
+    private el: ElementRef,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit() {
@@ -102,16 +107,52 @@ export class ForgotPassword implements AfterViewInit {
     }
   }
 
+  startTimer() {
+    this.canResend = false;
+    this.timeLeft = 300; 
+    
+    this.timerInterval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+        this.cdr.detectChanges();
+      } else {
+        this.canResend = true;
+        clearInterval(this.timerInterval);
+      }
+    }, 1000);
+  }
+
+  get formattedTime(): string {
+    const minutes = Math.floor(this.timeLeft / 60);
+    const seconds = this.timeLeft % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+  
   sendCode() {
+    if (this.isSending || !this.canResend) return;
+
     this.validateEmail();
     if (this.emailError) return;
 
+    this.isSending = true; 
+    this.errorMessage = '';
+
+    
+    this.step = 2;
+    this.startTimer();
+
     this.authService.forgotPassword(this.email).subscribe({
       next: () => {
-        this.errorMessage = '';
-        this.step = 2;
+        
+        this.isSending = false; 
       },
       error: (err) => {
+       
+        this.isSending = false; 
+        this.step = 1;
+        this.canResend = true;
+        if (this.timerInterval) clearInterval(this.timerInterval);
+        
         this.errorMessage = err.error.message || 'Failed to send code';
       }
     });

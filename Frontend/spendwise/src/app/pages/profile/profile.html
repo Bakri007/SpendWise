@@ -14,19 +14,34 @@
       </div>
 
       <div class="section">
-        <h3 class="section-title">Change Password</h3>
-        <div class="field">
-          <label class="label">New Password</label>
-          <input class="input" type="password" [(ngModel)]="newPassword" placeholder="••••••••" />
-        </div>
-        <div class="field">
-          <label class="label">Confirm Password</label>
-          <input class="input" type="password" [(ngModel)]="confirmPassword" placeholder="••••••••" />
-        </div>
-        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
-        <button class="btn" (click)="changePassword()">Update Password</button>
-      </div>
+  <h3 class="section-title">Change Password</h3>
+  
+  <!-- الباسورد الجديد -->
+  <div class="field">
+    <label class="label">New Password</label>
+    <div class="password-wrap">
+      <input class="input" [type]="showNewPassword ? 'text' : 'password'" [(ngModel)]="newPassword" placeholder="••••••••" />
+      <span class="eye" (click)="toggleNewPassword()">
+        <i [class]="showNewPassword ? 'ti ti-eye-off' : 'ti ti-eye'"></i>
+      </span>
+    </div>
+  </div>
+  
+  <!-- تأكيد الباسورد -->
+  <div class="field">
+    <label class="label">Confirm Password</label>
+    <div class="password-wrap">
+      <input class="input" [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="confirmPassword" placeholder="••••••••" />
+      <span class="eye" (click)="toggleConfirmPassword()">
+        <i [class]="showConfirmPassword ? 'ti ti-eye-off' : 'ti ti-eye'"></i>
+      </span>
+    </div>
+  </div>
+  
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+  <button class="btn" (click)="changePassword()">Update Password</button>
+</div>
 
     </div>
   </div>

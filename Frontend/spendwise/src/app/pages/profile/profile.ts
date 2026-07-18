@@ -20,6 +20,8 @@ export class Profile implements OnInit {
   confirmPassword: string = '';
   errorMessage: string = '';
   successMessage: string = '';
+  showNewPassword: boolean = false;   
+  showConfirmPassword: boolean = false;
 
   constructor(private authService: Auth) {}
 
@@ -36,13 +38,45 @@ export class Profile implements OnInit {
     
   }
 
+  toggleNewPassword() {
+  this.showNewPassword = !this.showNewPassword;
+}
+
+toggleConfirmPassword() {
+  this.showConfirmPassword = !this.showConfirmPassword;
+}
 changePassword() {
   this.errorMessage = '';
   this.successMessage = '';
 
-  if (!this.newPassword) { this.errorMessage = 'Password is required'; return; }
-  if (this.newPassword.length < 8) { this.errorMessage = 'Min 8 characters'; return; }
-  if (this.newPassword !== this.confirmPassword) { this.errorMessage = 'Passwords do not match'; return; }
+  if (!this.newPassword) { 
+    this.errorMessage = 'Password is required'; 
+    return; 
+  }
+  if (this.newPassword.length < 8) { 
+    this.errorMessage = 'Password must be at least 8 characters'; 
+    return; 
+  }
+  if (!/[A-Z]/.test(this.newPassword)) { 
+    this.errorMessage = 'Must contain at least one uppercase letter'; 
+    return; 
+  }
+  if (!/[a-z]/.test(this.newPassword)) { 
+    this.errorMessage = 'Must contain at least one lowercase letter'; 
+    return; 
+  }
+  if (!/[0-9]/.test(this.newPassword)) { 
+    this.errorMessage = 'Must contain at least one number'; 
+    return; 
+  }
+  if (!/\W/.test(this.newPassword)) { 
+    this.errorMessage = 'Must contain at least one special character'; 
+    return; 
+  }
+  if (this.newPassword !== this.confirmPassword) { 
+    this.errorMessage = 'Passwords do not match'; 
+    return; 
+  }
 
   this.authService.changePassword(this.userEmail, this.newPassword).subscribe({
     next: () => {
