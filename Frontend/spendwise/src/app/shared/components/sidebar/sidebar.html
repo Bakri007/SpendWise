@@ -9,30 +9,44 @@
   </div>
 
   <nav class="nav">
-    <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" (click)="closeSidebar()">
-      <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
-      <span *ngIf="!isCollapsed">Dashboard</span>
-    </a>
-    <a class="nav-item" routerLink="/expenses" routerLinkActive="active" (click)="closeSidebar()">
-      <i class="ti ti-arrow-down-circle" aria-hidden="true"></i>
-      <span *ngIf="!isCollapsed">Expenses</span>
-    </a>
-    <a class="nav-item" routerLink="/income" routerLinkActive="active" (click)="closeSidebar()">
-      <i class="ti ti-arrow-up-circle" aria-hidden="true"></i>
-      <span *ngIf="!isCollapsed">Income</span>
-    </a>
-    <a class="nav-item" routerLink="/budget" routerLinkActive="active" (click)="closeSidebar()">
-      <i class="ti ti-wallet" aria-hidden="true"></i>
-      <span *ngIf="!isCollapsed">Budget</span>
-    </a>
-    <a class="nav-item" routerLink="/categories" routerLinkActive="active" (click)="closeSidebar()">
-      <i class="ti ti-category" aria-hidden="true"></i>
-      <span *ngIf="!isCollapsed">Categories</span>
-    </a>
-    <a class="nav-item" routerLink="/profile" routerLinkActive="active" (click)="closeSidebar()">
-      <i class="ti ti-user" aria-hidden="true"></i>
-      <span *ngIf="!isCollapsed">Profile</span>
-    </a>
+    <ng-container *ngIf="userRole === 'USER'">
+      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" (click)="closeSidebar()">
+        <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
+        <span *ngIf="!isCollapsed">Dashboard</span>
+      </a>
+      <a class="nav-item" routerLink="/expenses" routerLinkActive="active" (click)="closeSidebar()">
+        <i class="ti ti-arrow-down-circle" aria-hidden="true"></i>
+        <span *ngIf="!isCollapsed">Expenses</span>
+      </a>
+      <a class="nav-item" routerLink="/income" routerLinkActive="active" (click)="closeSidebar()">
+        <i class="ti ti-arrow-up-circle" aria-hidden="true"></i>
+        <span *ngIf="!isCollapsed">Income</span>
+      </a>
+      <a class="nav-item" routerLink="/budget" routerLinkActive="active" (click)="closeSidebar()">
+        <i class="ti ti-wallet" aria-hidden="true"></i>
+        <span *ngIf="!isCollapsed">Budget</span>
+      </a>
+      <a class="nav-item" routerLink="/categories" routerLinkActive="active" (click)="closeSidebar()">
+        <i class="ti ti-category" aria-hidden="true"></i>
+        <span *ngIf="!isCollapsed">Categories</span>
+      </a>
+      <a class="nav-item" routerLink="/profile" routerLinkActive="active" (click)="closeSidebar()">
+        <i class="ti ti-user" aria-hidden="true"></i>
+        <span *ngIf="!isCollapsed">Profile</span>
+      </a>
+    </ng-container>
+
+    
+    <ng-container *ngIf="userRole === 'ADMIN'">
+      <a class="nav-item" routerLink="/admin/dashboard" routerLinkActive="active" (click)="closeSidebar()">
+        <i class="ti ti-shield" aria-hidden="true"></i>
+        <span *ngIf="!isCollapsed">Users</span>
+      </a>
+      <a class="nav-item" routerLink="/profile" routerLinkActive="active" (click)="closeSidebar()">
+        <i class="ti ti-user" aria-hidden="true"></i>
+        <span *ngIf="!isCollapsed">Profile</span>
+      </a>
+    </ng-container>
   </nav>
 
   <div class="sidebar-bottom">

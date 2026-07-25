@@ -10,17 +10,12 @@
           <i class="ti ti-plus" aria-hidden="true"></i> Add Category
         </button>
       </div>
-
-      <div class="tabs">
-        <button class="tab" [class.active]="activeTab === 'expense'" (click)="setTab('expense')">Expenses</button>
-        <button class="tab" [class.active]="activeTab === 'income'" (click)="setTab('income')">Income</button>
-      </div>
       
       <div class="categories-grid">
         <div class="category-card" *ngFor="let cat of filteredCategories">
           <div class="cat-icon" [style.color]="cat.color">{{ cat.icon }}</div>
           <div class="cat-name">{{ cat.name }}</div>
-          <div class="cat-type" [class.income]="cat.type === 'income'">{{ cat.type }}</div>
+          <!-- تم إزالة حقل الـ cat-type من هنا -->
           <div class="cat-actions">
             <button class="icon-btn" (click)="editCategory(cat)">
               <i class="ti ti-edit" aria-hidden="true"></i>
@@ -56,13 +51,7 @@
             <label class="label">Color</label>
             <input class="input" type="color" [(ngModel)]="form.color" />
           </div>
-          <div class="field">
-            <label class="label">Type</label>
-            <select class="input" [(ngModel)]="form.type">
-              <option value="expense">Expense</option>
-              <option value="income">Income</option>
-            </select>
-          </div>
+          <!-- تم إزالة اختيار الـ Type (Select) من هنا -->
 
           <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
           <button class="btn" (click)="onSubmit()">{{ editMode ? 'Save Changes' : 'Add Category' }}</button>

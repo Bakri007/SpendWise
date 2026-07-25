@@ -48,6 +48,13 @@ resetPassword(email: string, resetCode: string, newPassword: string) {
 changePassword(email: string, newPassword: string) {
   return this.http.patch(`${this.apiUrl}/change-password`, { email, newPassword });
 }
+getAllUsers() {
+  return this.http.get(`${this.apiUrl}/users`);
+}
+
+deleteUser(id: string) {
+  return this.http.delete(`${this.apiUrl}/users/${id}`);
+}
 }
 
 

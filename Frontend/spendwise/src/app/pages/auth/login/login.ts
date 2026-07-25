@@ -81,21 +81,32 @@ goToForgotPassword() {
 }
 
   onSubmit() {
-    this.validateEmail();
-    this.validatePassword();
+  this.validateEmail();
+  this.validatePassword();
 
-    if (this.emailError || this.passwordError) {
-      return;
-    }
-
-    this.authService.login(this.email, this.password).subscribe({
-      next: (response: any) => {
-        localStorage.setItem('token', response.data.token);
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.errorMessage = err.error.message || 'Login failed';
-      }
-    });
+  if (this.emailError || this.passwordError) {
+    return;
   }
+
+  this.authService.login(this.email, this.password).subscribe({
+    next: (response: any) => {
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+
+      // فك شفرة التوكن لقراءة الـ Role
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const userRole = payload.role ? payload.role.toUpperCase() : 'USER';
+
+      // التوجيه بناءً على الـ Role
+      if (userRole === 'ADMIN') {
+        this.router.navigate(['/admin/dashboard']); // غير '/admin' لمسار صفحة الأدمن عندك
+      } else {
+        this.router.navigate(['/dashboard']);
+      }
+    },
+    error: (err) => {
+      this.errorMessage = err.error.message || 'Login failed';
+    }
+  });
+}
 }

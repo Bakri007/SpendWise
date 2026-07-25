@@ -31,7 +31,7 @@ export class Profile implements OnInit {
       const payload = JSON.parse(atob(token.split('.')[1]));
       this.userEmail = payload.email || '';
       this.userRole = payload.role || 'user';
-      this.userName = this.userEmail.split('@')[0];
+      this.userName = payload.name || 'User';
       this.userInitial = this.userName.charAt(0).toUpperCase();
     }
     

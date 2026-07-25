@@ -59,11 +59,21 @@ export class Expenses implements OnInit {
     
   });
 }
+getCategoryName(catId: any): string {
+  if (!catId) return '—';
+  // لو كان أوبجكت كامل جاي من الباك إند
+  if (typeof catId === 'object' && catId.name) return catId.name;
+  // لو جاي مجرد ID وبندور عليه في مصفوفة الـ categories
+  const found = this.categories.find(c => c._id === catId);
+  return found ? found.name : '—';
+  
+}
 
   loadCategories() {
     this.categoryService.getCategories().subscribe({
       next: (res: any) => {
         this.categories = (res.data.category || []).filter((c: any) => c.type === 'expense');
+        this.cdr.detectChanges();
       }
     });
   }

@@ -16,7 +16,7 @@
           <thead>
             <tr>
               <th>Description</th>
-              <th>Category</th>
+              <!-- <th>Category</th> -->
               <th>Date</th>
               <th>Source</th>
               <th>Amount</th>
@@ -26,7 +26,7 @@
           <tbody>
             <tr *ngFor="let income of incomes">
               <td>{{ income.description }}</td>
-              <td>{{ income.category_id?.name || '—' }}</td>
+              <!-- <td>{{ income.category_id?.name || '—' }}</td> -->
               <td>{{ income.date | date:'MMM d, y' }}</td>
               <td><span class="badge">{{ income.source }}</span></td>
               <td class="amount green">+ {{ currency }} {{ income.amount | number:'1.0-0' }}</td>

@@ -5,6 +5,7 @@ import { Sidebar } from '../../shared/components/sidebar/sidebar';
 import { Navbar } from '../../shared/components/navbar/navbar';
 import { Category } from '../../core/services/category';
 import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-categories',
   imports: [Sidebar, Navbar, NgFor, NgIf, FormsModule],
@@ -19,32 +20,33 @@ export class Categories implements OnInit {
   errorMessage: string = '';
   editId: string = '';
 
+  // الـ type هيفضل دايماً expense
   form = { name: '', icon: '📦', color: '#6366F1', type: 'expense' };
 
   get filteredCategories() {
-    return this.categories.filter(c => c.type === this.activeTab);
+    return this.categories.filter(c => c.type === 'expense');
   }
 
-  constructor(private categoryService: Category,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private categoryService: Category, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() { this.loadCategories(); }
 
   loadCategories() {
     this.categoryService.getCategories().subscribe({
-      next: (res: any) => { this.categories = res.data.category || []; 
+      next: (res: any) => { 
+        this.categories = res.data.category || []; 
         this.cdr.detectChanges();
       }
     });
   }
 
+  // تم الإبقاء عليها كـ Fallback لو مستخدمة داخلياً أو يمكنك حذفها تماماً
   setTab(tab: string) { this.activeTab = tab; }
 
   openModal() {
     this.editMode = false;
     this.editId = '';
-    this.form = { name: '', icon: '📦', color: '#6366F1', type: this.activeTab };
+    this.form = { name: '', icon: '📦', color: '#6366F1', type: 'expense' };
     this.errorMessage = '';
     this.showModal = true;
   }
@@ -52,7 +54,7 @@ export class Categories implements OnInit {
   editCategory(cat: any) {
     this.editMode = true;
     this.editId = cat._id;
-    this.form = { name: cat.name, icon: cat.icon, color: cat.color, type: cat.type };
+    this.form = { name: cat.name, icon: cat.icon, color: cat.color, type: 'expense' };
     this.errorMessage = '';
     this.showModal = true;
   }
@@ -86,6 +88,4 @@ export class Categories implements OnInit {
       });
     }
   }
-
-  
 }

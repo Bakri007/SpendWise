@@ -37,7 +37,7 @@
           <tbody>
             <tr *ngFor="let expense of expenses">
               <td>{{ expense.description }}</td>
-              <td>{{ expense.category_id?.name || '—' }}</td>
+             <td>{{ getCategoryName(expense.category_id) }}</td>
               <td>{{ expense.date | date:'MMM d, y' }}</td>
               <td><span class="badge">{{ expense.payment_method }}</span></td>
               <td class="amount red">- {{ currency }} {{ expense.amount | number:'1.0-0' }}</td>
