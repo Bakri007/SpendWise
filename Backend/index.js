@@ -33,13 +33,19 @@ app.use("/api/incomes", incomeRoutes);
 
 app.use("/api/budgets", budgetRoutes);
 
-app.use(handelError);
 
 app.get('/', (req, res) => {
   res.send('SpendWise API is running successfully!');
 });
 
+
+app.use(handelError);
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
+
+module.exports = app;
