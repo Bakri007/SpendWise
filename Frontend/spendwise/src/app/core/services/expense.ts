@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 export class Expense {
-  private apiUrl='http://localhost:3000/api/expenses';
+  private apiUrl = 'https://spend-wise-five-nu.vercel.app/api/expenses';
 
   constructor(private http: HttpClient){}
 

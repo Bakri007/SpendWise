@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class Category {
-  private apiUrl = 'http://localhost:3000/api/categories';
+ private apiUrl = 'https://spend-wise-five-nu.vercel.app/api/categories';
 
   constructor(private http:HttpClient){}
   
