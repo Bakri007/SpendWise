@@ -35,7 +35,9 @@ app.use("/api/budgets", budgetRoutes);
 
 app.use(handelError);
 
-
+app.get('/', (req, res) => {
+  res.send('SpendWise API is running successfully!');
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
