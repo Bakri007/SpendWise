@@ -16,8 +16,22 @@ const app = express();
 app.use(express.json());
 
 
+const cors = require('cors');
+
+const allowedOrigins = [
+  'http://localhost:4200',
+  'https://spend-wise-gyej.vercel.app'
+];
+
 app.use(cors({
-  origin: "http://localhost:4200"
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
 
 connectDB();
