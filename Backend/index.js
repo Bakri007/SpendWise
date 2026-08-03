@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 const express = require("express");
+const cors = require("cors");
 const connectDB = require("./config/db");
 const handelError = require("./middlewares/handelError");
 const authRoutes = require("./routes/auth");
@@ -7,20 +8,16 @@ const categoryRoutes = require("./routes/category");
 const expenseRoutes = require("./routes/expense");
 const incomeRoutes = require("./routes/income");
 const budgetRoutes = require("./routes/budget")
-const cors = require("cors");
+
 
 dotenv.config();
 
 const app = express();
 
-app.use(express.json());
-
-
-const cors = require('cors');
-
 const allowedOrigins = [
   'http://localhost:4200',
-  'https://spend-wise-gyej.vercel.app'
+  'https://spend-wise-gyej.vercel.app',
+  
 ];
 
 app.use(cors({
@@ -33,6 +30,9 @@ app.use(cors({
   },
   credentials: true
 }));
+
+app.use(express.json());
+
 
 connectDB();
 
